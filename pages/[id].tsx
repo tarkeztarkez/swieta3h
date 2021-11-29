@@ -32,6 +32,7 @@ const Home: NextPage = () => {
         if (record) {
           seturl(record.url);
           console.log(url);
+          settext(record.text);
         }
         setloading(false);
       }
