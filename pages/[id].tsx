@@ -41,7 +41,7 @@ const Home: NextPage = () => {
             (
               await (
                 await fetch(
-                  "http://worldtimeapi.org/api/timezone/Europe/Warsaw"
+                  "https://worldtimeapi.org/api/timezone/Europe/Warsaw"
                 )
               ).json()
             ).datetime
