@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-function stats() {
+function Stats() {
   const [loading, setloading] = useState(true);
   const [statsList, setstatsList] = useState(
     new Array<{ id: string; views: number }>()
@@ -45,7 +45,7 @@ function stats() {
         <div>
           {statsList.map((row) => {
             return (
-              <p>
+              <p key={row.id}>
                 /{row.id}: {row.views} wyświetleń
                 <button
                   onClick={async () => {
@@ -66,4 +66,4 @@ function stats() {
   );
 }
 
-export default stats;
+export default Stats;
