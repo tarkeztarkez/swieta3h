@@ -42,6 +42,7 @@ const Home: NextPage = ({
       if (data) {
         const record = data.days.find(({ id }) => id == querryId);
         if (record) {
+          fetch(`https://api.countapi.xyz/hit/swieta3h/wzt${querryId}`);
           record.openDate = dayjs(record.date, "YYYY-MM-DD").hour(0).minute(0);
           const today = dayjs(now);
           if (today.isAfter(record.openDate) || !record.date) {
