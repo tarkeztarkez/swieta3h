@@ -1,4 +1,8 @@
-import type { NextPage } from "next";
+import type {
+  GetServerSideProps,
+  InferGetServerSidePropsType,
+  NextPage,
+} from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import YouTube from "../components/Youtube";
@@ -9,7 +13,9 @@ import dayjs, { Dayjs } from "dayjs";
 
 import styles from "../styles/Home.module.css";
 
-const Home: NextPage = () => {
+const Home: NextPage = ({
+  now,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const [loading, setloading] = useState(true);
   const [url, seturl] = useState("");
   const [text, settext] = useState("");
@@ -37,15 +43,7 @@ const Home: NextPage = () => {
         const record = data.days.find(({ id }) => id == querryId);
         if (record) {
           record.openDate = dayjs(record.date, "YYYY-MM-DD").hour(0).minute(0);
-          const today = dayjs(
-            (
-              await (
-                await fetch(
-                  "https://worldtimeapi.org/api/timezone/Europe/Warsaw"
-                )
-              ).json()
-            ).datetime
-          );
+          const today = dayjs(now);
           if (today.isAfter(record.openDate) || !record.date) {
             seturl(record.url);
             settext(record.text);
@@ -71,6 +69,15 @@ const Home: NextPage = () => {
       )}
     </div>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const now = dayjs().toISOString();
+  return {
+    props: {
+      now: now,
+    }, // will be passed to the page component as props
+  };
 };
 
 export default Home;
